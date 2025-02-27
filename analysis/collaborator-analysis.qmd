@@ -52,7 +52,25 @@ max_traps <- traps_clean %>%
     summarize(max = max(TRAPS, na.rm = TRUE))
 ```
 
+## Exercise: Data Visualization
 
+```{r}
+traps_vis <- traps_clean %>% 
+  group_by(YEAR)
 
+ggplot(traps_vis,
+       aes(x = TRAPS)) +
+    geom_histogram() +
+    facet_wrap( ~ YEAR)
+```
 
+```{r}
+traps_site <- traps_clean %>% 
+  group_by(SITE, YEAR) %>% 
+  summarize(TRAPS, TOTAL_TRAPS = sum(TRAPS, na.rm = TRUE))
 
+ggplot(traps_site,
+  aes(x = YEAR, y = TRAPS, color = SITE)) +
+  geom_line() +
+  geom_point()
+```
