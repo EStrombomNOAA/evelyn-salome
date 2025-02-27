@@ -27,9 +27,30 @@ head(lobster_traps)
 str(lobster_traps)
 ```
 
+# Convert missing values
 
+```{r}
+traps_clean <- lobster_traps %>%
+    mutate(TRAPS = na_if(TRAPS, -99999))
 
+which(is.na(traps_clean$TRAPS))
+unique(traps_clean$TRAPS)
+```
 
+# Filter practice
+
+```{r}
+traps_clean_subset <- traps_clean %>% 
+  filter(SITE != "NAPL")
+
+traps_clean_subset2 <- traps_clean %>% 
+  filter(SITE == "CARP",
+         TRAPS > 20)
+
+max_traps <- traps_clean %>% 
+  group_by(SITE, MONTH) %>%
+    summarize(max = max(TRAPS, na.rm = TRUE))
+```
 
 
 
