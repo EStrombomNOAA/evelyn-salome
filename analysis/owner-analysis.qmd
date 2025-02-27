@@ -22,3 +22,37 @@ lobster_abundance <- read_csv("../data/Lobster_Abundance_All_Years_20220829.csv"
 str(lobster_abundance)
 ```
 
+## 11.2 Convert missing values
+
+```{r}
+unique(lobster_abundance$SIZE_MM)
+```
+
+```{r}
+lobster_abundance <- lobster_abundance %>%
+  mutate(SIZE_MM = na_if(SIZE_MM, -99999.0))
+
+unique(lobster_abundance$SIZE_MM)
+```
+
+## filter()
+
+```{r}
+lobster_abundance_subset <- lobster_abundance %>%
+  filter(SITE != "NAPL")
+
+```
+
+```{r}
+lobster_abundance_subset2 <- lobster_abundance %>%
+  filter( SITE == "AQUE"|SIZE_MM > 70)
+```
+
+```{r}
+lobster_abundance %>% 
+
+  group_by(SITE, MONTH) %>% 
+
+  summarize(max_value = max(SIZE_MM, na.rm = TRUE)) 
+```
+
